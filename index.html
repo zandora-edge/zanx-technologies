@@ -391,21 +391,21 @@
               <form>
                 <div class="form-group">
                   <label for="Name">Name</label>
-                  <input type="text" class="form-control" id="Name" placeholder="Name">
+                  <input type="text" class="form-control" id="name" placeholder="Name">
                 </div>
                 <div class="form-group">
                   <label for="Email">Email</label>
-                  <input type="email" class="form-control" id="Email-1" placeholder="Email">
+                  <input type="email" class="form-control" id="email" placeholder="Email">
                 </div>
                 <div class="form-group">
                   <label for="Message">Message</label>
-                  <textarea class="form-control" id="Message" placeholder="Enter your Message"></textarea>
+                  <textarea class="form-control" id="message" placeholder="Enter your Message"></textarea>
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-success">Submit</button>
+              <button type="button" id="submit"  class="btn btn-success">Submit</button>
             </div>
           </div>
         </div>
@@ -418,4 +418,42 @@
   <script src="vendors/aos/js/aos.js"></script>
   <script src="js/landingpage.js"></script>
 </body>
+
+<!-- Vendor JS Files -->
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script>
+  var btn = document.getElementById("submit")
+  btn.addEventListener('click', function(e){
+    e.preventDefault()
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var message = document.getElementById("message").value;
+
+      Email.send({
+      SecureToken : "6fe9301f-96b3-4fef-9f3e-34b734f01454",
+      To : 'professor@zandora.in',
+      From : 'zandora.help@gmail.com',
+      Subject : "ZanX Technologies #Enquiry",
+      Body : "<b>Name : </b>" + name + "<br>"
+      + "<b>Email : </b>" + email + "<br>"
+      + "<b>Message : </b>" + message
+    }).then(function(response) {
+    if (response === 'OK') {
+    // Show success notification
+    alert("Your message has been sent. Thank you!");
+
+    // Clear the form
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("message").value = "";
+    } else {
+    // Show error notification
+    alert("Error sending message. Please try again later.");
+    }
+  
+    });
+  
+  })
+  </script>
+
 </html>
